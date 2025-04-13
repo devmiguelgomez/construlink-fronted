@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaUser, FaLock, FaTools } from 'react-icons/fa';
+import construlinkLogo from '../src/assets/construlink.jpg';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -78,7 +79,7 @@ const Login = () => {
       <div className="auth-header">
           {/* Reemplaza el icono con la imagen importada */}
           <img 
-            src="./src/construlink.jpg" // Asegúrate que la ruta sea correcta desde la carpeta public o ajusta la importación si está en src
+            src={construlinkLogo} // Asegúrate que la ruta sea correcta desde la carpeta public o ajusta la importación si está en src
             alt="Construlink Logo" 
             style={{ width: '100px', height: 'auto', marginBottom: '15px' }} // Ajusta el tamaño según necesites
           />
