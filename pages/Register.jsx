@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { FaUser, FaLock, FaEnvelope, FaTools, FaWrench } from 'react-icons/fa';
+import construlinkLogo from '../src/assets/construlink.jpg';
 
 // Lista de especialidades comunes para maestros
 const especialidades = [
@@ -140,7 +141,7 @@ const Register = () => {
         <div className="auth-header">
           {/* Reemplaza el icono con la imagen importada */}
           <img 
-            src="./src/construlink.jpg" // Asegúrate que la ruta sea correcta desde la carpeta public o ajusta la importación si está en src
+            src={construlinkLogo} // Asegúrate que la ruta sea correcta desde la carpeta public o ajusta la importación si está en src
             alt="Construlink Logo" 
             style={{ width: '100px', height: 'auto', marginBottom: '15px' }} // Ajusta el tamaño según necesites
           />
