@@ -1,0 +1,482 @@
+:root {
+  --rojo-ferreteria: #984F40;
+  --rojo-oscuro: #984F41;
+  --gris-claro: #FFFAFA;
+  --gris-medio: #FFFAFA;
+  --gris-oscuro: #000000;
+  --texto-claro: #FFFFFF;
+  --texto-oscuro: #000000;
+  --sombra: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --radio-borde: 8px;
+  --transicion: all 0.3s ease;
+}
+
+/* Base Styles */
+body {
+  background-color: #EDE2E2;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+#root, 
+.dashboard-container,
+.main-content {
+  background-color: #EDE2E2;
+  min-height: 100vh;
+  width: 100%;
+}
+
+button {
+  cursor: pointer;
+  transition: var(--transicion);
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 240px;
+  background-color: var(--rojo-ferreteria);
+  color: #EDE2E2;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Altura de la ventana */
+  position: fixed; /* Fijamos la sidebar */
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* Permitir desplazamiento si el contenido es muy largo */
+  z-index: 100;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  padding: 0 20px 20px;
+  border-bottom: 1px solid #7C7676;
+  margin-bottom: 20px;
+}
+
+.logo-container h2 {
+  margin-left: 10px;
+  font-size: 1.5rem;
+}
+
+.profile-brief {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px 20px;
+  border-bottom: 1px solid #7C7676;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 60px;
+  background-color: #7C7676;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #7C7676;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  background: transparent;
+  border: none;
+  color: #EDE2E2;
+  font-size: 1rem;
+  text-align: left;
+  gap: 10px;
+}
+
+.nav-item:hover {
+  background-color: var(--rojo-ferreteria);
+}
+
+.nav-item.active {
+  background-color: var(--rojo-ferreteria);
+}
+
+.logout {
+  margin-top: auto;
+  color: #EDE2E2;
+  border-top: 1px solid #7C7676;
+  padding-top: 15px;
+  position: relative; /* Añadido para posicionamiento */
+  bottom: 20px; /* Ajuste para que no quede tan largo */
+}
+
+/* Main Content Area */
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  margin-left: 240px; /* Añadir margen igual al ancho del sidebar */
+  min-height: 100vh;
+  width: calc(100% - 240px); /* Ancho completo menos el sidebar */
+}
+
+.content-header {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--gris-medio);
+}
+
+.content-body {
+  background-color: #FFFFFF;
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra);
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #B0B0B0;
+  border-radius: var(--radio-borde);
+  font-size: 1rem;
+  box-sizing: border-box;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: var(--rojo-ferreteria);
+  outline: none;
+}
+
+.btn {
+  padding: 12px 15px;
+  background-color: var(--rojo-ferreteria);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radio-borde);
+  font-size: 1rem;
+  transition: var(--transicion);
+}
+
+.btn:hover {
+  background-color: var(--rojo-oscuro);
+}
+
+.btn-secondary {
+  background-color: var(--rojo-ferreteria);
+}
+
+.btn-secondary:hover {
+  background-color: #7C7676;
+}
+
+/* Mobile Styles */
+.mobile-header {
+  display: none;
+  padding: 15px;
+  background-color: var(--rojo-ferreteria);
+  color: #FFFFFF;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.menu-toggle {
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  margin-right: 15px;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  bottom: 0;
+  width: 80%;
+  max-width: 300px;
+  background-color: var(--gris-oscuro);
+  color: #FFFFFF;
+  z-index: 10;
+  padding: 20px 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-nav button {
+  padding: 12px 20px;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  text-align: left;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-nav button:hover {
+  background-color: #7C7676;
+}
+
+.mobile-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #7C7676;
+  margin-bottom: 20px;
+}
+
+/* Cards and Lists */
+.card {
+  background-color: #FFFFFF;
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra);
+  margin-bottom: 20px;
+  padding: 15px;
+  overflow: hidden;
+  border: 1px solid var(--gris-medio);
+}
+
+.card-header {
+  background-color: var(--rojo-ferreteria);
+  color: #FFFFFF;
+  padding: 15px 20px;
+  font-weight: 500;
+  margin: -15px -15px 15px -15px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.list-group {
+  list-style: none;
+  padding: 0;
+}
+
+.list-group-item {
+  padding: 15px;
+  border-bottom: 1px solid var(--gris-medio);
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+/* Estilos para las tarjetas de ferreterías */
+.card-image {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  border-radius: var(--radio-borde) var(--radio-borde) 0 0;
+  margin: -15px -15px 15px -15px;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ferreteria-card {
+  transition: transform 0.3s ease;
+}
+
+.ferreteria-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Login and Register Forms */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #EDE2E2;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.auth-card {
+  background-color: #FFFFFF;
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra);
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+  margin: 0 auto;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-header h2 {
+  color: var(--rojo-ferreteria);
+  margin-top: 15px;
+}
+
+.alert {
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border-radius: var(--radio-borde);
+  color: white;
+}
+
+.alert-danger {
+  background-color: #f44336;
+}
+
+/* Product grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 60px;
+    padding: 15px;
+  }
+  
+  .auth-card {
+    padding: 30px 20px;
+  }
+}
+
+/* Navbar Components */
+.navbar {
+  background-color: var(--rojo-ferreteria);
+  padding: 15px 20px;
+  color: #EDE2E2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #EDE2E2;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-link {
+  color: #EDE2E2;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: var(--transicion);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-link:hover {
+  opacity: 0.8;
+}
+
+/* Profile styles */
+.profile-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Utility classes */
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.p-4 {
+  padding: 1.5rem;
+}
