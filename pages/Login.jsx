@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FaUser, FaLock, FaTools } from 'react-icons/fa';
 import construlinkLogo from '../src/assets/construlink.jpg';
+import '../src/styles/forms.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -75,82 +76,91 @@ const Login = () => {
 
   return (
     <div className="auth-container">
-      <div className="auth-card">
-      <div className="auth-header">
-          {/* Reemplaza el icono con la imagen importada */}
+      <div className="auth-card form-container">
+        <div className="auth-header">
           <img 
-            src={construlinkLogo} // Asegúrate que la ruta sea correcta desde la carpeta public o ajusta la importación si está en src
+            src={construlinkLogo}
             alt="Construlink Logo" 
-            style={{ width: '100px', height: 'auto', marginBottom: '15px' }} // Ajusta el tamaño según necesites
+            style={{ width: '120px', height: 'auto', marginBottom: '15px' }}
           />
           <h2>Iniciar Sesión en Construlink</h2>
         </div>
 
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="form-error">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">
-              <FaUser /> Correo Electrónico
+            <label htmlFor="email" className="form-label">
+              Correo Electrónico
             </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="form-control"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              autoComplete="email"
-            />
+            <div className="input-with-icon">
+              <FaUser className="input-icon" />
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="form-control"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                autoComplete="email"
+                placeholder="ejemplo@correo.com"
+              />
+            </div>
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">
-              <FaLock /> Contraseña
+            <label htmlFor="password" className="form-label">
+              Contraseña
             </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="form-control"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              autoComplete="current-password"
-            />
+            <div className="input-with-icon">
+              <FaLock className="input-icon" />
+              <input
+                type="password"
+                id="password"
+                name="password"
+                className="form-control"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                autoComplete="current-password"
+                placeholder="Su contraseña"
+              />
+            </div>
           </div>
 
           <button 
             type="submit" 
-            className="btn" 
-            style={{ width: '100%', marginBottom: '25px', backgroundColor: '#984F40', color: 'white', padding: '14px' }}
+            className="form-button"
             disabled={loading}
           >
             {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
           </button>
 
-          <div className="text-center mb-4">
+          <div className="text-center mt-4">
             <p>¿No tienes cuenta? Regístrate como:</p>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '15px', gap: '10px' }}>
               <button 
-                type="button" // Añadir type="button" para que no envíe el formulario
+                type="button"
                 onClick={() => navigate('/register?role=cliente')} 
-                style={{ flex: 1, backgroundColor: '#984F40', color: 'white', padding: '10px', border: 'none', borderRadius: '4px' }}
+                className="form-button"
+                style={{ flex: 1, padding: '8px' }}
               >
                 Cliente
               </button>
               <button 
-                type="button" // Añadir type="button" para que no envíe el formulario
+                type="button"
                 onClick={() => navigate('/register?role=ferreteria')} 
-                style={{ flex: 1, backgroundColor: '#984F40', color: 'white', padding: '10px', border: 'none', borderRadius: '4px' }}
+                className="form-button"
+                style={{ flex: 1, padding: '8px' }}
               >
                 Ferretería
               </button>
               <button 
-                type="button" // Añadir type="button" para que no envíe el formulario
+                type="button"
                 onClick={() => navigate('/register?role=maestro')} 
-                style={{ flex: 1, backgroundColor: '#984F40', color: 'white', padding: '10px', border: 'none', borderRadius: '4px' }}
+                className="form-button"
+                style={{ flex: 1, padding: '8px' }}
               >
                 Maestro
               </button>
