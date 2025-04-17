@@ -101,7 +101,7 @@ const Register = () => {
       
       console.log('Enviando datos de registro:', dataToSend);
       
-      const response = await axios.post('https://construlink-mu.vercel.app/api/users/register', dataToSend);
+      const response = await axios.post('https://construlink-inky.vercel.app/api/users/register', dataToSend);
       console.log('Respuesta del servidor:', response.data);
       localStorage.setItem('token', response.data.token);
       
