@@ -88,9 +88,22 @@ export const serviciosAPI = {
 // ============= SOLICITUDES DE SERVICIO =============
 export const solicitudesAPI = {
   crear: (data) => api.post('/solicitudes', data),
-  getMisSolicitudes: () => api.get('/solicitudes/cliente'),
-  getSolicitudesRecibidas: () => api.get('/solicitudes/maestro'),
-  cambiarEstado: (id, estado) => api.put(`/solicitudes/${id}/estado`, { estado }),
+  getMisSolicitudes: async () => {
+    return await axios.get(`${API_BASE_URL}/solicitudes/mis-solicitudes`, {
+      headers: { Authorization: localStorage.getItem('token') }
+    });
+  },
+  getSolicitudesRecibidas: async () => {
+    return await axios.get(`${API_BASE_URL}/solicitudes/recibidas`, {
+      headers: { Authorization: localStorage.getItem('token') }
+    });
+  },
+  cambiarEstado: async (solicitudId, nuevoEstado) => {
+    return await axios.put(`${API_BASE_URL}/solicitudes/${solicitudId}/estado`, 
+      { estado: nuevoEstado },
+      { headers: { Authorization: localStorage.getItem('token') } }
+    );
+  },
 };
 
 // ============= ESTADISTICAS =============
