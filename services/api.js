@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://construlink-mu.vercel.app/api';
+const API_BASE_URL = 'https://construlink-inky.vercel.app/api';
 
 // Crear una instancia de axios con la URL base
 const api = axios.create({
