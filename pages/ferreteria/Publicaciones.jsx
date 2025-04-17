@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { productosAPI } from '../../services/api';
+import { productosAPI, getS3ImageUrl } from '../../services/api';
 import { FaUpload, FaTrash, FaEdit, FaComments, FaStar, FaRegStar, FaEye, FaShoppingCart } from 'react-icons/fa';
 
 const Publicaciones = () => {
@@ -226,26 +226,26 @@ const Publicaciones = () => {
               </div>
             )}
             <div className="p-3">
-              <h4>{p.nombre}</h4>
-              <p><strong>Descripción:</strong> {p.descripcion}</p>
-              <p><strong>Precio:</strong> ${p.precio}</p>
-              <p><strong>Disponibles:</strong> {p.cantidadDisponible} unidades</p>
+              <h4 style={{color: '#111111', fontWeight: 'bold'}}>{p.nombre}</h4>
+              <p style={{color: '#333333'}}><strong style={{color: '#111111'}}>Descripción:</strong> {p.descripcion}</p>
+              <p style={{color: '#333333'}}><strong style={{color: '#111111'}}>Precio:</strong> ${p.precio}</p>
+              <p style={{color: '#333333'}}><strong style={{color: '#111111'}}>Disponibles:</strong> {p.cantidadDisponible} unidades</p>
               
               {/* Estadísticas de visualizaciones y ventas */}
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', marginBottom: '10px' }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <FaEye style={{ marginRight: '5px', color: '#3498db' }} />
-                  <span>{p.visualizaciones || 0} visualizaciones</span>
+                  <span style={{ color: '#333333', fontWeight: 500 }}>{p.visualizaciones || 0} visualizaciones</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <FaShoppingCart style={{ marginRight: '5px', color: '#27ae60' }} />
-                  <span>{p.totalVendidos || 0} vendidos</span>
+                  <span style={{ color: '#333333', fontWeight: 500 }}>{p.totalVendidos || 0} vendidos</span>
                 </div>
               </div>
               
               <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                <div style={{ marginRight: '10px' }}>
-                  <strong>Calificación: </strong>
+                <div style={{ marginRight: '10px', color: '#333333' }}>
+                  <strong style={{color: '#111111'}}>Calificación: </strong>
                   <span>{calcularPromedio(p.comentarios)}</span>
                 </div>
                 <div>
@@ -283,39 +283,15 @@ const Publicaciones = () => {
         
         {publicaciones.length === 0 && (
           <div className="text-center p-4 w-100">
-            <p>No has creado ninguna publicación todavía.</p>
+            <p style={{color: '#333333', fontSize: '1.1rem'}}>No has creado ninguna publicación todavía.</p>
           </div>
         )}
       </div>
 
       {mostrandoComentarios && (
-        <div className="modal" style={{ 
-          display: 'block',
-          position: 'fixed',
-          zIndex: 1000,
-          left: 0,
-          top: 0,
-          width: '100%',
-          height: '100%',
-          overflow: 'auto',
-          backgroundColor: 'rgba(0,0,0,0.4)',
-        }}>
-          <div className="modal-content" style={{
-            backgroundColor: '#F4F1F1',
-            margin: '15% auto',
-            padding: '20px',
-            border: '1px solid #7C7676',
-            width: '80%',
-            maxWidth: '600px',
-            borderRadius: '8px'
-          }}>
-            <span className="close" onClick={cerrarModal} style={{
-              color: '#aaa',
-              float: 'right',
-              fontSize: '28px',
-              fontWeight: 'bold',
-              cursor: 'pointer'
-            }}>&times;</span>
+        <div className="modal" style={{ display: 'block' }}>
+          <div className="modal-content">
+            <span className="close" onClick={cerrarModal}>&times;</span>
             {productoSeleccionado && (
               <div>
                 <h3>Comentarios para {productoSeleccionado.nombre}</h3>
@@ -323,36 +299,34 @@ const Publicaciones = () => {
                 {productoSeleccionado.comentarios && productoSeleccionado.comentarios.length > 0 ? (
                   <div>
                     {productoSeleccionado.comentarios.map((comentario, index) => (
-                      <div key={index} style={{ 
-                        border: '1px solid #F4F1F1', 
-                        padding: '10px', 
-                        margin: '10px 0',
-                        borderRadius: '5px'
-                      }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <strong>{comentario.cliente || "Cliente anónimo"}</strong>
-                          <div>
+                      <div key={index} className="comment-container">
+                        <div className="comment-header">
+                          <strong className="comment-author">
+                            {comentario.cliente || "Cliente anónimo"}
+                          </strong>
+                          <div className="comment-rating">
                             {[...Array(5)].map((_, i) => (
-                              <span key={i} style={{ color: i < comentario.calificacion ? '#ffc107' : '#F4F1F1' }}>
+                              <span key={i} className={i < comentario.calificacion ? "star-filled" : "star-empty"}>
                                 {i < comentario.calificacion ? <FaStar /> : <FaRegStar />}
                               </span>
                             ))}
                           </div>
                         </div>
-                        <p style={{ marginTop: '5px' }}>
-                          {comentario.texto === "Sin comentario" ? 
-                            <em style={{ color: '#7C7676' }}>El cliente solo dejó calificación</em> : 
-                            comentario.texto
-                          }
-                        </p>
-                        <p style={{ fontSize: '0.8rem', color: '#7C7676', marginBottom: 0 }}>
+                        <div className="comment-body">
+                          {comentario.texto === "Sin comentario" ? (
+                            <em className="comment-no-text">El cliente solo dejó calificación</em>
+                          ) : (
+                            <p className="comment-text">{comentario.texto}</p>
+                          )}
+                        </div>
+                        <p className="comment-date">
                           {comentario.fecha ? new Date(comentario.fecha).toLocaleString() : "Fecha no disponible"}
                         </p>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p>No hay comentarios para este producto.</p>
+                  <p style={{ color: '#333333' }}>No hay comentarios para este producto.</p>
                 )}
               </div>
             )}

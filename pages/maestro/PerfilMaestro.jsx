@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { FaCamera, FaWrench } from 'react-icons/fa';
+import { getS3ImageUrl } from '../../services/api';
 
 // Lista de especialidades comunes para maestros
 const especialidades = [
@@ -108,56 +109,22 @@ const PerfilMaestro = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '500px', margin: '0 auto' }}>
-      <h2 style={{ color: '#984F40', textAlign: 'center' }}>Editar Perfil</h2>
+    <div className="profile-container">
+      <h2 className="profile-title">Editar Perfil</h2>
       
       <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-        <div style={{ position: 'relative', display: 'inline-block' }}>
+        <div className="avatar maestro-avatar">
           {(preview || perfilProp?.fotoPerfil) ? (
             <img 
               src={preview || `https://construlink-inky.vercel.app/uploads/${perfilProp.fotoPerfil}`}
               alt="Perfil" 
-              style={{ 
-                width: '150px', 
-                height: '150px', 
-                borderRadius: '50%', 
-                objectFit: 'cover',
-                border: '3px solid #F4F1F1',
-                boxShadow: '0 3px 10px rgba(0,0,0,0.2)'
-              }} 
             />
           ) : (
-            <div 
-              style={{ 
-                width: '150px', 
-                height: '150px', 
-                borderRadius: '50%', 
-                backgroundColor: '#f1c40f',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '40px',
-                color: 'white',
-                fontWeight: 'bold'
-              }}
-            >
-              {perfilProp?.nombre?.charAt(0) || 'M'}
+            <div className="avatar-placeholder">
+              {perfilProp?.nombre?.charAt(0)?.toUpperCase() || 'M'}
             </div>
           )}
-          <label htmlFor="fotoPerfil" style={{ 
-            position: 'absolute', 
-            bottom: '5px', 
-            right: '5px',
-            backgroundColor: '#984F40',
-            color: 'white',
-            borderRadius: '50%',
-            width: '35px',
-            height: '35px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer'
-          }}>
+          <label htmlFor="fotoPerfil" className="avatar-upload-button">
             <FaCamera />
           </label>
           <input 
@@ -171,7 +138,7 @@ const PerfilMaestro = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
 
       <div>
         <div className="form-group mb-3">
-          <label htmlFor="nombre">Nombre</label>
+          <label htmlFor="nombre" style={{color: '#333333', fontWeight: 500}}>Nombre</label>
           <input 
             type="text"
             id="nombre"
@@ -179,35 +146,47 @@ const PerfilMaestro = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
             className="form-control"
             value={perfil.nombre || ''} 
             onChange={handleChange} 
+            style={{
+              color: '#333333',
+              backgroundColor: '#fafafa'
+            }}
           />
         </div>
         
         <div className="form-group mb-3">
-          <label htmlFor="telefono">Teléfono</label>
+          <label htmlFor="telefono" style={{color: '#333333', fontWeight: 500}}>Teléfono</label>
           <input 
             type="text"
             id="telefono"
             name="telefono" 
             className="form-control"
             value={perfil.telefono || ''} 
-            onChange={handleChange} 
+            onChange={handleChange}
+            style={{
+              color: '#333333',
+              backgroundColor: '#fafafa'
+            }}
           />
         </div>
         
         <div className="form-group mb-3">
-          <label htmlFor="direccion">Dirección</label>
+          <label htmlFor="direccion" style={{color: '#333333', fontWeight: 500}}>Dirección</label>
           <input 
             type="text"
             id="direccion"
             name="direccion" 
             className="form-control"
             value={perfil.direccion || ''} 
-            onChange={handleChange} 
+            onChange={handleChange}
+            style={{
+              color: '#333333',
+              backgroundColor: '#fafafa'
+            }}
           />
         </div>
         
         <div className="form-group mb-3">
-          <label>
+          <label style={{color: '#333333', fontWeight: 500}}>
             <FaWrench style={{ marginRight: '5px' }} />
             Especialidades
           </label>

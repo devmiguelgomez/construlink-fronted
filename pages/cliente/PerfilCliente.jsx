@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { FaCamera } from 'react-icons/fa';
+import { getS3ImageUrl } from '../../services/api';
 
 const PerfilCliente = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditando }) => {
   const [perfil, setPerfil] = useState({
@@ -62,96 +63,76 @@ const PerfilCliente = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
       
       <div style={{ textAlign: 'center', margin: '2rem 0' }}>
         <div style={{ position: 'relative', display: 'inline-block' }}>
-          {(preview || perfilProp?.fotoPerfil) ? (
-            <img 
-              src={preview || `https://construlink-inky.vercel.app/uploads/${perfilProp.fotoPerfil}`}
-              alt="Perfil" 
-              style={{ 
-                width: '150px', 
-                height: '150px', 
-                borderRadius: '50%', 
-                objectFit: 'cover',
-                border: '3px solid #F4F1F1',
-                boxShadow: '0 3px 10px rgba(0,0,0,0.2)'
-              }} 
+          <div className="avatar cliente-avatar">
+            {(preview || perfilProp?.fotoPerfil) ? (
+              <img 
+                src={preview || `https://construlink-inky.vercel.app/uploads/${perfilProp.fotoPerfil}`}
+                alt="Perfil" 
+              />
+            ) : (
+              <div className="avatar-placeholder">
+                {perfilProp?.nombre?.charAt(0)?.toUpperCase() || 'C'}
+              </div>
+            )}
+            <label htmlFor="fotoPerfil" className="avatar-upload-button">
+              <FaCamera />
+            </label>
+            <input 
+              id="fotoPerfil" 
+              type="file" 
+              onChange={handleFileChange} 
+              style={{ display: 'none' }} 
             />
-          ) : (
-            <div 
-              style={{ 
-                width: '150px', 
-                height: '150px', 
-                borderRadius: '50%', 
-                backgroundColor: '#f1c40f',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '40px',
-                color: 'white',
-                fontWeight: 'bold'
-              }}
-            >
-              {perfilProp?.nombre?.charAt(0) || 'C'}
-            </div>
-          )}
-          <label htmlFor="fotoPerfil" style={{ 
-            position: 'absolute', 
-            bottom: '5px', 
-            right: '5px',
-            backgroundColor: '#984F40',
-            color: 'white',
-            borderRadius: '50%',
-            width: '35px',
-            height: '35px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer'
-          }}>
-            <FaCamera />
-          </label>
-          <input 
-            id="fotoPerfil" 
-            type="file" 
-            onChange={handleFileChange} 
-            style={{ display: 'none' }} 
-          />
+          </div>
         </div>
       </div>
 
       <div>
         <div className="form-group mb-3">
-          <label htmlFor="nombre">Nombre</label>
+          <label htmlFor="nombre" style={{color: '#333333'}}>Nombre</label>
           <input 
             type="text"
             id="nombre"
             name="nombre" 
             className="form-control"
             value={perfil.nombre || ''} 
-            onChange={handleChange} 
+            onChange={handleChange}
+            style={{
+              color: '#333333',
+              backgroundColor: '#fafafa'
+            }}
           />
         </div>
         
         <div className="form-group mb-3">
-          <label htmlFor="telefono">Teléfono</label>
+          <label htmlFor="telefono" style={{color: '#333333'}}>Teléfono</label>
           <input 
             type="text"
             id="telefono"
             name="telefono" 
             className="form-control"
             value={perfil.telefono || ''} 
-            onChange={handleChange} 
+            onChange={handleChange}
+            style={{
+              color: '#333333',
+              backgroundColor: '#fafafa'
+            }}
           />
         </div>
         
         <div className="form-group mb-3">
-          <label htmlFor="direccion">Dirección</label>
+          <label htmlFor="direccion" style={{color: '#333333'}}>Dirección</label>
           <input 
             type="text"
             id="direccion"
             name="direccion" 
             className="form-control"
             value={perfil.direccion || ''} 
-            onChange={handleChange} 
+            onChange={handleChange}
+            style={{
+              color: '#333333',
+              backgroundColor: '#fafafa'
+            }}
           />
         </div>
         

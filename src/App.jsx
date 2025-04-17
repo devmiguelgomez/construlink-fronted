@@ -1,58 +1,44 @@
 // src/App.jsx
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from '../context/AuthContext';
-import PrivateRoute from '../components/PrivateRoute';
-import Navbar from '../components/Navbar';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import PrivateRoute from '../components/PrivateRoute';
 import DashboardCliente from '../pages/cliente/DashboardCliente';
 import DashboardFerreteria from '../pages/ferreteria/DashboardFerreteria';
 import DashboardMaestro from '../pages/maestro/DashboardMaestro';
+import { AuthProvider } from '../context/AuthContext';
+
+// Usar variables de entorno de Vite
+const API_URL = import.meta.env.VITE_API_URL || "https://construlink-inky.vercel.app/api";
+console.log('API URL:', API_URL);
 
 function App() {
-  console.log("App rendering");
   return (
-    <BrowserRouter>
-      <AuthProvider>
+    <AuthProvider>
+      <Router>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          
-          {/* Rutas para clientes */}
           <Route path="/cliente/*" element={
-            <>
-              <Navbar />
-              <PrivateRoute role="cliente">
-                <DashboardCliente />
-              </PrivateRoute>
-            </>
+            <PrivateRoute role="cliente">
+              <DashboardCliente />
+            </PrivateRoute>
           } />
-          
-          {/* Rutas para ferreterías */}
           <Route path="/ferreteria/*" element={
-            <>
-              <Navbar />
-              <PrivateRoute role="ferreteria">
-                <DashboardFerreteria />
-              </PrivateRoute>
-            </>
+            <PrivateRoute role="ferreteria">
+              <DashboardFerreteria />
+            </PrivateRoute>
           } />
-          
-          {/* Rutas para maestros */}
           <Route path="/maestro/*" element={
-            <>
-              <Navbar />
-              <PrivateRoute role="maestro">
-                <DashboardMaestro />
-              </PrivateRoute>
-            </>
+            <PrivateRoute role="maestro">
+              <DashboardMaestro />
+            </PrivateRoute>
           } />
-          
-          {/* Ruta para cualquier otra URL */}
-          <Route path="*" element={<p>Ruta no encontrada</p>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+      </Router>
+    </AuthProvider>
   );
 }
 

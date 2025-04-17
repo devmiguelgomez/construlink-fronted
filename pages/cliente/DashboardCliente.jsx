@@ -227,7 +227,7 @@ const DashboardCliente = () => {
                 <PerfilCliente perfil={perfil} setPerfil={setPerfil} setEditando={setEditandoPerfil} />
               ) : (
                 <div>
-                  <h2>Información del Perfil</h2>
+                  <h2 style={{color: '#333333'}}>Información del Perfil</h2>
                   {perfil && (
                     <div>
                       <div className="text-center">
@@ -245,10 +245,10 @@ const DashboardCliente = () => {
                         </div>
                       </div>
                       <div style={{ marginTop: '20px' }}>
-                        <p><strong>Nombre:</strong> {perfil.nombre}</p>
-                        <p><strong>Correo:</strong> {perfil.email}</p>
-                        <p><strong>Teléfono:</strong> {perfil.telefono || 'No especificado'}</p>
-                        <p><strong>Dirección:</strong> {perfil.direccion || 'No especificada'}</p>
+                        <p style={{color: '#333333'}}><strong style={{color: '#222222'}}>Nombre:</strong> {perfil.nombre}</p>
+                        <p style={{color: '#333333'}}><strong style={{color: '#222222'}}>Correo:</strong> {perfil.email}</p>
+                        <p style={{color: '#333333'}}><strong style={{color: '#222222'}}>Teléfono:</strong> {perfil.telefono || 'No especificado'}</p>
+                        <p style={{color: '#333333'}}><strong style={{color: '#222222'}}>Dirección:</strong> {perfil.direccion || 'No especificada'}</p>
                       </div>
                       <button 
                         className="btn" 

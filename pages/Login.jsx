@@ -1,18 +1,21 @@
 // src/pages/Login.jsx
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { authAPI } from '../services/api'; // Importar el servicio API
+import { AuthContext } from '../context/AuthContext'; // Importar el contexto de autenticación
 import { FaUser, FaLock, FaTools } from 'react-icons/fa';
-import construlinkLogo from '../src/assets/construlink.jpg';
+// Corregir la ruta de la imagen
+import construlinkLogo from '../public/construlink.jpg'; // Ajusta esta ruta según donde esté tu imagen
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
-    password: ''  // Este nombre debe coincidir con el controlador del backend
+    password: '' // Este nombre debe coincidir con el controlador del backend
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // Usar el contexto de autenticación
 
   const handleChange = (e) => {
     setFormData({
@@ -24,7 +27,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError(null);
     
     try {
       console.log('Enviando datos de login:', formData);
@@ -36,15 +39,16 @@ const Login = () => {
         return;
       }
       
-      const response = await axios.post('https://construlink-inky.vercel.app/api/users/login', {
+      // Usar el servicio API en lugar de axios directo
+      const response = await authAPI.login({
         email: formData.email.trim(),
         password: formData.password
       });
       
       console.log('Respuesta del servidor:', response.data);
       
-      // Almacenar el token en localStorage
-      localStorage.setItem('token', response.data.token);
+      // Usar el método login del contexto para guardar los datos
+      login(response.data.user, response.data.token);
       
       // Verificar el rol del usuario
       const userRole = response.data.user?.role;

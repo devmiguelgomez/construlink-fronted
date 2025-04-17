@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://construlink-inky.vercel.app/api';
+// Usar variables de entorno de Vite
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://construlink-inky.vercel.app/api';
 
 // Crear una instancia de axios con la URL base
 const api = axios.create({
@@ -23,9 +24,9 @@ api.interceptors.request.use(
 
 // ============= AUTENTICACIÓN =============
 export const authAPI = {
-  login: (credentials) => api.post('/auth/login', credentials),
-  register: (userData) => api.post('/auth/register', userData),
-  verifyToken: () => api.get('/auth/verify'),
+  login: (credentials) => api.post('/users/login', credentials),
+  register: (userData) => api.post('/users/register', userData),
+  verifyToken: () => api.get('/users/perfil'),
 };
 
 // ============= USUARIOS =============
@@ -148,13 +149,19 @@ export const estadisticasAPI = {
 
 // Función para manejar URLs de imágenes
 export const getS3ImageUrl = (imageKey) => {
-  if (!imageKey) return null;
+  if (!imageKey) return '/placeholder.png';
   
   // Si ya es una URL completa
   if (imageKey.startsWith('http')) return imageKey;
   
-  // Si es un archivo local
-  return `https://construlink-mu.vercel.app/uploads/${imageKey}`;
+  // Cloudinary URLs o URL directa
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  if (cloudName) {
+    return `https://res.cloudinary.com/${cloudName}/image/upload/v1/construlink/${imageKey}`;
+  }
+  
+  // Si no hay Cloudinary configurado, usar la URL directa
+  return `${API_BASE_URL.replace('/api', '')}/uploads/${imageKey}`;
 };
 
 export default api;

@@ -186,11 +186,11 @@ const MisServicios = () => {
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <FaEye style={{ marginRight: '5px', color: '#3498db' }} />
-                  <span>{s.visualizaciones || 0} visualizaciones</span>
+                  <span style={{ color: '#333333', fontWeight: 500 }}>{s.visualizaciones || 0} visualizaciones</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <FaHandshake style={{ marginRight: '5px', color: '#27ae60' }} />
-                  <span>{s.totalSolicitudes || 0} solicitudes</span>
+                  <span style={{ color: '#333333', fontWeight: 500 }}>{s.totalSolicitudes || 0} solicitudes</span>
                 </div>
               </div>
               
@@ -240,33 +240,9 @@ const MisServicios = () => {
 
       {/* Modal para ver comentarios */}
       {mostrandoComentarios && (
-        <div className="modal" style={{ 
-          display: 'block',
-          position: 'fixed',
-          zIndex: 1000,
-          left: 0,
-          top: 0,
-          width: '100%',
-          height: '100%',
-          overflow: 'auto',
-          backgroundColor: 'rgba(0,0,0,0.4)',
-        }}>
-          <div className="modal-content" style={{
-            backgroundColor: '#F4F1F1',
-            margin: '15% auto',
-            padding: '20px',
-            border: '1px solid #7C7676',
-            width: '80%',
-            maxWidth: '600px',
-            borderRadius: '8px'
-          }}>
-            <span className="close" onClick={cerrarModal} style={{
-              color: '#aaa',
-              float: 'right',
-              fontSize: '28px',
-              fontWeight: 'bold',
-              cursor: 'pointer'
-            }}>&times;</span>
+        <div className="modal" style={{ display: 'block' }}>
+          <div className="modal-content">
+            <span className="close" onClick={cerrarModal}>&times;</span>
             {servicioSeleccionado && (
               <div>
                 <h3>Comentarios para {servicioSeleccionado.nombreServicio}</h3>
@@ -274,36 +250,32 @@ const MisServicios = () => {
                 {servicioSeleccionado.comentarios && servicioSeleccionado.comentarios.length > 0 ? (
                   <div>
                     {servicioSeleccionado.comentarios.map((comentario, index) => (
-                      <div key={index} style={{ 
-                        border: '1px solid #F4F1F1', 
-                        padding: '10px', 
-                        margin: '10px 0',
-                        borderRadius: '5px'
-                      }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <strong>{comentario.cliente || "Cliente anónimo"}</strong>
-                          <div>
+                      <div key={index} className="comment-container">
+                        <div className="comment-header">
+                          <strong className="comment-author">{comentario.cliente || "Cliente anónimo"}</strong>
+                          <div className="comment-rating">
                             {[...Array(5)].map((_, i) => (
-                              <span key={i} style={{ color: i < comentario.calificacion ? '#ffc107' : '#F4F1F1' }}>
+                              <span key={i} className={i < comentario.calificacion ? "star-filled" : "star-empty"}>
                                 {i < comentario.calificacion ? <FaStar /> : <FaRegStar />}
                               </span>
                             ))}
                           </div>
                         </div>
-                        <p style={{ marginTop: '5px' }}>
-                          {comentario.texto === "Sin comentario" ? 
-                            <em style={{ color: '#7C7676' }}>El cliente solo dejó calificación</em> : 
-                            comentario.texto
-                          }
-                        </p>
-                        <p style={{ fontSize: '0.8rem', color: '#7C7676', marginBottom: 0 }}>
+                        <div className="comment-body">
+                          {comentario.texto === "Sin comentario" ? (
+                            <em className="comment-no-text">El cliente solo dejó calificación</em>
+                          ) : (
+                            <p className="comment-text">{comentario.texto}</p>
+                          )}
+                        </div>
+                        <p className="comment-date">
                           {comentario.fecha ? new Date(comentario.fecha).toLocaleString() : "Fecha no disponible"}
                         </p>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p>No hay comentarios para este servicio.</p>
+                  <p style={{ color: '#333333' }}>No hay comentarios para este servicio.</p>
                 )}
               </div>
             )}

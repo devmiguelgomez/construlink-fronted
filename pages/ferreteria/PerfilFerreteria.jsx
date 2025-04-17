@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaCamera } from 'react-icons/fa';
+import { getS3ImageUrl } from '../../services/api';
 
 const PerfilFerreteria = ({ perfil: perfilProp, setPerfil: setPerfilProp }) => {
   const [perfil, setPerfil] = useState({
@@ -75,56 +76,22 @@ const PerfilFerreteria = ({ perfil: perfilProp, setPerfil: setPerfilProp }) => {
   }
 
   return (
-    <div style={{ padding: '20px', maxWidth: '500px', margin: '0 auto' }}>
-      <h2 style={{ color: '#984F40', textAlign: 'center' }}>Mi Perfil</h2>
+    <div className="profile-container">
+      <h2 className="profile-title">Mi Perfil</h2>
       
       <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-        <div style={{ position: 'relative', display: 'inline-block' }}>
+        <div className="avatar ferreteria-avatar">
           {(preview || perfil.fotoPerfil) ? (
             <img 
               src={preview || `https://construlink-inky.vercel.app/uploads/${perfil.fotoPerfil}`}
               alt="Perfil" 
-              style={{ 
-                width: '150px', 
-                height: '150px', 
-                borderRadius: '50%', 
-                objectFit: 'cover',
-                border: '3px solid #F4F1F1',
-                boxShadow: '0 3px 10px rgba(0,0,0,0.2)'
-              }} 
             />
           ) : (
-            <div 
-              style={{ 
-                width: '150px', 
-                height: '150px', 
-                borderRadius: '50%', 
-                backgroundColor: '#f1c40f',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '40px',
-                color: 'white',
-                fontWeight: 'bold'
-              }}
-            >
-              {perfil?.nombre?.charAt(0) || 'F'}
+            <div className="avatar-placeholder">
+              {perfil?.nombre?.charAt(0)?.toUpperCase() || 'F'}
             </div>
           )}
-          <label htmlFor="fotoPerfil" style={{ 
-            position: 'absolute', 
-            bottom: '5px', 
-            right: '5px',
-            backgroundColor: '#984F40',
-            color: 'white',
-            borderRadius: '50%',
-            width: '35px',
-            height: '35px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer'
-          }}>
+          <label htmlFor="fotoPerfil" className="avatar-upload-button">
             <FaCamera />
           </label>
           <input 
@@ -145,9 +112,12 @@ const PerfilFerreteria = ({ perfil: perfilProp, setPerfil: setPerfilProp }) => {
           style={{
             padding: '12px',
             borderRadius: '8px',
-            border: '1px solid #ddd',
+            border: '1px solid #ccc',
             marginBottom: '15px',
-            width: '100%'
+            width: '100%',
+            fontSize: '1rem',
+            backgroundColor: '#fafafa',
+            color: '#333333'
           }}
         />
         <input 
@@ -158,9 +128,12 @@ const PerfilFerreteria = ({ perfil: perfilProp, setPerfil: setPerfilProp }) => {
           style={{
             padding: '12px',
             borderRadius: '8px',
-            border: '1px solid #ddd',
+            border: '1px solid #ccc',
             marginBottom: '15px',
-            width: '100%'
+            width: '100%',
+            fontSize: '1rem',
+            backgroundColor: '#fafafa',
+            color: '#333333'
           }}
         />
         <input 
@@ -171,9 +144,12 @@ const PerfilFerreteria = ({ perfil: perfilProp, setPerfil: setPerfilProp }) => {
           style={{
             padding: '12px',
             borderRadius: '8px',
-            border: '1px solid #ddd',
+            border: '1px solid #ccc',
             marginBottom: '15px',
-            width: '100%'
+            width: '100%',
+            fontSize: '1rem',
+            backgroundColor: '#fafafa',
+            color: '#333333'
           }}
         />
         
@@ -183,16 +159,17 @@ const PerfilFerreteria = ({ perfil: perfilProp, setPerfil: setPerfilProp }) => {
             backgroundColor: '#984F40',
             color: 'white',
             border: 'none',
-            padding: '12px',
+            padding: '14px',
             borderRadius: '8px',
             fontWeight: 'bold',
             cursor: 'pointer',
             width: '100%',
             fontSize: '16px',
-            marginTop: '10px'
+            marginTop: '10px',
+            transition: 'background-color 0.2s'
           }}
         >
-          Guardar Cambios
+          {loading ? 'Guardando...' : 'Guardar Cambios'}
         </button>
       </div>
     </div>

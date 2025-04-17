@@ -6,10 +6,25 @@ import { AuthContext } from '../context/AuthContext';
 const PrivateRoute = ({ children, role }) => {
   const { authenticated, loading, user } = useContext(AuthContext);
   
-  console.log("PrivateRoute:", { authenticated, loading, userRole: user?.role, expectedRole: role });
+  console.log("PrivateRoute:", { 
+    authenticated, 
+    loading, 
+    userRole: user?.role, 
+    expectedRole: role,
+    tokenExiste: !!localStorage.getItem('token') 
+  });
 
   if (loading) {
-    return <div className="loading">Cargando...</div>;
+    return (
+      <div className="loading-container" style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+      }}>
+        <div className="spinner">Cargando...</div>
+      </div>
+    );
   }
 
   // Si no está autenticado, redirigir al login

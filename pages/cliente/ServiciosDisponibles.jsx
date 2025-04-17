@@ -257,10 +257,10 @@ const ServiciosDisponibles = ({ maestroId }) => {
       <div className="product-grid">
         {servicios.map(s => (
           <div key={s._id} className="card">
-            <h3>{s.nombreServicio}</h3>
-            <p><strong>Tipo:</strong> {s.tipo}</p>
-            <p><strong>Descripción:</strong> {s.descripcion}</p>
-            <p><strong>Precio:</strong> ${s.precio}</p>
+            <h3 style={{color: '#333333'}}>{s.nombreServicio}</h3>
+            <p style={{color: '#333333'}}><strong style={{color: '#222222'}}>Tipo:</strong> {s.tipo}</p>
+            <p style={{color: '#333333'}}><strong style={{color: '#222222'}}>Descripción:</strong> {s.descripcion}</p>
+            <p style={{color: '#333333'}}><strong style={{color: '#222222'}}>Precio:</strong> ${s.precio}</p>
             <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
               <button 
                 onClick={() => mostrarComentarios(s)}

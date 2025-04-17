@@ -54,8 +54,8 @@ const FerreteriasDisponibles = ({ onSeleccionarFerreteria }) => {
                     }}
                   />
                 ) : (
-                  <div className="avatar-placeholder" style={{ fontSize: '2.5rem' }}>
-                    <FaStore />
+                  <div className="avatar-placeholder" style={{ fontSize: '40px', fontWeight: 'bold' }}>
+                    {ferreteria.nombre?.charAt(0)?.toUpperCase() || <FaStore />}
                   </div>
                 )}
               </div>

@@ -240,6 +240,10 @@ const ProductosDisponibles = ({ ferreteriaId }) => {
     );
   };
 
+  const getS3ImageUrl = (imageName) => {
+    return `https://construlink-inky.vercel.app/uploads/${imageName}`;
+  };
+
   if (loading) {
     return (
       <div className="text-center p-4">
@@ -266,42 +270,44 @@ const ProductosDisponibles = ({ ferreteriaId }) => {
                 <img src={`https://construlink-inky.vercel.app/uploads/${p.imagen}`} alt={p.nombre} />
               </div>
             )}
-            <h3>{p.nombre}</h3>
-            <p><strong>Descripción:</strong> {p.descripcion}</p>
-            <p><strong>Disponible:</strong> {p.cantidadDisponible}</p>
-            <p><strong>Contacto:</strong> {p.contacto}</p>
-            <p><strong>Precio:</strong> ${p.precio}</p>
-            
-            <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
-              <button 
-                onClick={() => mostrarComentarios(p)}
-                className="btn btn-secondary"
-                style={{ flex: 1 }}
-              >
-                <FaComments style={{ marginRight: '5px' }} />
-                Ver Comentarios ({p.comentarios?.length || 0})
-              </button>
+            <div className="p-3">
+              <h3 style={{color: '#111111', fontWeight: 'bold'}}>{p.nombre}</h3>
+              <p style={{color: '#333333'}}><strong style={{color: '#111111'}}>Descripción:</strong> {p.descripcion}</p>
+              <p style={{color: '#333333'}}><strong style={{color: '#111111'}}>Disponible:</strong> {p.cantidadDisponible}</p>
+              <p style={{color: '#333333'}}><strong style={{color: '#111111'}}>Contacto:</strong> {p.contacto}</p>
+              <p style={{color: '#333333'}}><strong style={{color: '#111111'}}>Precio:</strong> ${p.precio}</p>
               
-              {haCompradoProducto(p._id) ? (
+              <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
                 <button 
-                  onClick={() => comentarProducto(p._id)}
-                  className={`btn btn-secondary ${yaComentado(p._id) ? 'disabled' : ''}`}
-                  style={{ flex: 1, opacity: yaComentado(p._id) ? 0.6 : 1 }}
-                  disabled={yaComentado(p._id)}
-                  title={yaComentado(p._id) ? "Ya has comentado este producto" : ""}
-                >
-                  {yaComentado(p._id) ? 'Ya Comentado' : 'Comentar'}
-                </button>
-              ) : (
-                <button 
-                  onClick={() => hacerPedido(p._id)}
-                  className="btn"
+                  onClick={() => mostrarComentarios(p)}
+                  className="btn btn-secondary"
                   style={{ flex: 1 }}
-                  disabled={p.cantidadDisponible <= 0}
                 >
-                  {p.cantidadDisponible > 0 ? 'Pedir producto' : 'Agotado'}
+                  <FaComments style={{ marginRight: '5px' }} />
+                  Ver Comentarios ({p.comentarios?.length || 0})
                 </button>
-              )}
+                
+                {haCompradoProducto(p._id) ? (
+                  <button 
+                    onClick={() => comentarProducto(p._id)}
+                    className={`btn btn-secondary ${yaComentado(p._id) ? 'disabled' : ''}`}
+                    style={{ flex: 1, opacity: yaComentado(p._id) ? 0.6 : 1 }}
+                    disabled={yaComentado(p._id)}
+                    title={yaComentado(p._id) ? "Ya has comentado este producto" : ""}
+                  >
+                    {yaComentado(p._id) ? 'Ya Comentado' : 'Comentar'}
+                  </button>
+                ) : (
+                  <button 
+                    onClick={() => hacerPedido(p._id)}
+                    className="btn"
+                    style={{ flex: 1 }}
+                    disabled={p.cantidadDisponible <= 0}
+                  >
+                    {p.cantidadDisponible > 0 ? 'Pedir producto' : 'Agotado'}
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         ))}
@@ -309,37 +315,16 @@ const ProductosDisponibles = ({ ferreteriaId }) => {
       
       {productos.length === 0 && (
         <div className="text-center p-4">
-          <p>No hay productos disponibles</p>
+          <p style={{color: '#333333', fontSize: '1.1rem'}}>No hay productos disponibles</p>
         </div>
       )}
       
+      {/* Modal de comentarios */}
       <div id="comentariosModal" className="modal" style={{ 
         display: mostrandoComentarios ? 'block' : 'none',
-        position: 'fixed',
-        zIndex: 1000,
-        left: 0,
-        top: 0,
-        width: '100%',
-        height: '100%',
-        overflow: 'auto',
-        backgroundColor: 'rgba(0,0,0,0.4)',
       }}>
-        <div className="modal-content" style={{
-          backgroundColor: '#F4F1F1',
-          margin: '15% auto',
-          padding: '20px',
-          border: '1px solid #7C7676',
-          width: '80%',
-          maxWidth: '600px',
-          borderRadius: '8px'
-        }}>
-          <span className="close" onClick={cerrarModal} style={{
-            color: '#aaa',
-            float: 'right',
-            fontSize: '28px',
-            fontWeight: 'bold',
-            cursor: 'pointer'
-          }}>&times;</span>
+        <div className="modal-content">
+          <span className="close" onClick={cerrarModal}>&times;</span>
           {productoSeleccionado && (
             <div>
               <h3>Comentarios para {productoSeleccionado.nombre}</h3>
@@ -347,43 +332,39 @@ const ProductosDisponibles = ({ ferreteriaId }) => {
               {productoSeleccionado.comentarios && productoSeleccionado.comentarios.length > 0 ? (
                 <div>
                   {productoSeleccionado.comentarios.map((comentario, index) => (
-                    <div key={index} style={{ 
-                      border: '1px solid #F4F1F1', 
-                      padding: '10px', 
-                      margin: '10px 0',
-                      borderRadius: '5px'
-                    }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <strong>{comentario.cliente || "Cliente anónimo"}</strong>
-                        <div>
+                    <div key={index} className="comment-container">
+                      <div className="comment-header">
+                        <strong className="comment-author">{comentario.cliente || "Cliente anónimo"}</strong>
+                        <div className="comment-rating">
                           {[...Array(5)].map((_, i) => (
-                            <span key={i} style={{ color: i < comentario.calificacion ? '#ffc107' : '#F4F1F1' }}>
+                            <span key={i} className={i < comentario.calificacion ? "star-filled" : "star-empty"}>
                               {i < comentario.calificacion ? <FaStar /> : <FaRegStar />}
                             </span>
                           ))}
                         </div>
                       </div>
-                      <p style={{ marginTop: '5px' }}>
-                        {comentario.texto === "Sin comentario" ? 
-                          <em style={{ color: '#7C7676' }}>Solo dejó calificación</em> : 
-                          comentario.texto
-                        }
-                      </p>
-                      <p style={{ fontSize: '0.8rem', color: '#7C7676', marginBottom: 0 }}>
+                      <div className="comment-body">
+                        {comentario.texto === "Sin comentario" ? (
+                          <em className="comment-no-text">Solo dejó calificación</em>
+                        ) : (
+                          <p className="comment-text">{comentario.texto}</p>
+                        )}
+                      </div>
+                      <p className="comment-date">
                         {comentario.fecha ? new Date(comentario.fecha).toLocaleString() : "Fecha no disponible"}
                       </p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p>No hay comentarios para este producto.</p>
+                <p style={{ color: '#333333' }}>No hay comentarios para este producto.</p>
               )}
               
-              {haCompradoProducto(productoSeleccionado._id) && (
-                <div style={{ marginTop: '20px' }}>
+              {haCompradoProducto(productoSeleccionado._id) && !yaComentado(productoSeleccionado._id) && (
+                <div style={{ marginTop: '20px', color: '#333333' }}>
                   <h4>Añadir un comentario</h4>
                   <div style={{ marginBottom: '10px' }}>
-                    <label>Tu calificación:</label>
+                    <label style={{ color: '#333333', display: 'block', marginBottom: '5px' }}>Tu calificación:</label>
                     <StarRating rating={calificacion} setRating={setCalificacion} />
                   </div>
                   <button 
@@ -403,158 +384,19 @@ const ProductosDisponibles = ({ ferreteriaId }) => {
         </div>
       </div>
       
-      <div id="pedidoModal" className="modal" style={{ 
-        display: 'none',
-        position: 'fixed',
-        zIndex: 1000,
-        left: 0,
-        top: 0,
-        width: '100%',
-        height: '100%',
-        overflow: 'auto',
-        backgroundColor: 'rgba(0,0,0,0.4)',
-      }}>
-        <div className="modal-content" style={{
-          backgroundColor: '#F4F1F1',
-          margin: '10% auto',
-          padding: '20px',
-          border: '1px solid #7C7676',
-          width: '80%',
-          maxWidth: '600px',
-          borderRadius: '8px'
-        }}>
-          <span className="close" onClick={cerrarModal} style={{
-            color: '#aaa',
-            float: 'right',
-            fontSize: '28px',
-            fontWeight: 'bold',
-            cursor: 'pointer'
-          }}>&times;</span>
-          {productoSeleccionado && (
-            <div>
-              <h3>Realizar Pedido: {productoSeleccionado.nombre}</h3>
-              <p><strong>Precio:</strong> ${productoSeleccionado.precio}</p>
-              <p><strong>Disponible:</strong> {productoSeleccionado.cantidadDisponible} unidades</p>
-              
-              <div className="form-group" style={{ marginTop: '20px' }}>
-                <label htmlFor="cantidad">Cantidad: *</label>
-                <input
-                  type="number"
-                  id="cantidad"
-                  name="cantidad"
-                  className="form-control"
-                  value={pedido.cantidad}
-                  onChange={handlePedidoChange}
-                  min="1"
-                  max={productoSeleccionado.cantidadDisponible}
-                  required
-                />
-              </div>
-              
-              <div className="form-group" style={{ marginTop: '10px' }}>
-                <label htmlFor="direccion">Dirección de entrega: *</label>
-                <input
-                  type="text"
-                  id="direccion"
-                  name="direccion"
-                  className="form-control"
-                  value={pedido.direccion}
-                  onChange={handlePedidoChange}
-                  required
-                />
-              </div>
-              
-              <div className="form-group" style={{ marginTop: '10px' }}>
-                <label htmlFor="contacto">Tu contacto: *</label>
-                <input
-                  type="text"
-                  id="contacto"
-                  name="contacto"
-                  className="form-control"
-                  value={pedido.contacto}
-                  onChange={handlePedidoChange}
-                  required
-                />
-              </div>
-              
-              <div className="form-group" style={{ marginTop: '10px' }}>
-                <label htmlFor="metodoPago">Método de pago: *</label>
-                <select
-                  id="metodoPago"
-                  name="metodoPago"
-                  className="form-control"
-                  value={pedido.metodoPago}
-                  onChange={handlePedidoChange}
-                  required
-                >
-                  <option value="">Seleccione un método de pago</option>
-                  <option value="efectivo">Efectivo</option>
-                  <option value="transferencia">Transferencia bancaria</option>
-                  <option value="tarjeta">Tarjeta de crédito/débito</option>
-                  <option value="nequi">Nequi</option>
-                  <option value="daviplata">Daviplata</option>
-                </select>
-              </div>
-              
-              <div className="form-group" style={{ marginTop: '10px' }}>
-                <p><strong>Total a pagar:</strong> ${productoSeleccionado.precio * pedido.cantidad}</p>
-              </div>
-              
-              <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-                <button 
-                  onClick={cerrarModal}
-                  className="btn btn-secondary"
-                  style={{ flex: 1 }}
-                >
-                  Cancelar
-                </button>
-                <button 
-                  onClick={enviarPedido}
-                  className="btn"
-                  style={{ flex: 1 }}
-                >
-                  Confirmar Pedido
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
+      {/* Modal para añadir comentarios */}
       {comentandoProducto && (
-        <div className="modal" style={{ 
-          display: 'block',
-          position: 'fixed',
-          zIndex: 1000,
-          left: 0,
-          top: 0,
-          width: '100%',
-          height: '100%',
-          overflow: 'auto',
-          backgroundColor: 'rgba(0,0,0,0.4)',
-        }}>
-          <div className="modal-content" style={{
-            backgroundColor: '#F4F1F1',
-            margin: '15% auto',
-            padding: '20px',
-            border: '1px solid #7C7676',
-            width: '80%',
-            maxWidth: '500px',
-            borderRadius: '8px'
-          }}>
-            <span className="close" onClick={() => setComentandoProducto(false)} style={{
-              color: '#aaa',
-              float: 'right',
-              fontSize: '28px',
-              fontWeight: 'bold',
-              cursor: 'pointer'
-            }}>&times;</span>
+        <div className="modal" style={{ display: 'block' }}>
+          <div className="modal-content">
+            <span className="close" onClick={() => setComentandoProducto(false)}>&times;</span>
             
             <h3>Calificar Producto</h3>
-            <h4>{productoSeleccionado?.nombre}</h4>
+            <h4 style={{ color: '#333333' }}>{productoSeleccionado?.nombre}</h4>
             
             <div style={{ marginBottom: '20px' }}>
-              <label><strong>Tu calificación:</strong> <span className="text-danger">*</span></label>
+              <label style={{ color: '#333333', fontWeight: '500', display: 'block', marginBottom: '8px' }}>
+                <strong>Tu calificación:</strong> <span className="required-mark">*</span>
+              </label>
               <div style={{ marginTop: '10px' }}>
                 <StarRating rating={calificacion} setRating={setCalificacion} />
               </div>
@@ -562,28 +404,28 @@ const ProductosDisponibles = ({ ferreteriaId }) => {
             </div>
             
             <div style={{ marginBottom: '20px' }}>
-              <label><strong>Tu comentario:</strong> (opcional)</label>
+              <label style={{ color: '#333333', fontWeight: '500', display: 'block', marginBottom: '8px' }}>
+                <strong>Tu comentario:</strong> (opcional)
+              </label>
               <textarea 
                 className="form-control"
                 value={comentarioTexto}
                 onChange={(e) => setComentarioTexto(e.target.value)}
                 placeholder="Escribe tu comentario aquí (opcional)"
                 rows="4"
-                style={{ marginTop: '10px' }}
+                style={{ marginTop: '10px', color: '#333333', backgroundColor: '#fafafa' }}
               />
             </div>
             
-            <div className="d-flex gap-2">
+            <div className="modal-footer">
               <button 
-                className="btn btn-secondary" 
-                style={{ flex: 1 }}
+                className="modal-btn modal-btn-secondary" 
                 onClick={() => setComentandoProducto(false)}
               >
                 Cancelar
               </button>
               <button 
-                className="btn" 
-                style={{ flex: 1 }}
+                className="modal-btn modal-btn-primary" 
                 onClick={enviarComentarioYCalificacion}
                 disabled={calificacion === 0}
               >

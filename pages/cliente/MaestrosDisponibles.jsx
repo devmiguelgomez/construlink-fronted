@@ -36,7 +36,7 @@ const MaestrosDisponibles = ({ onSeleccionarMaestro }) => {
     <div className="product-grid">
       {maestros.length === 0 ? (
         <div className="text-center p-4 w-100">
-          <p>No hay maestros disponibles actualmente.</p>
+          <p style={{color: '#333333'}}>No hay maestros disponibles actualmente.</p>
         </div>
       ) : (
         maestros.map(maestro => (
@@ -59,9 +59,9 @@ const MaestrosDisponibles = ({ onSeleccionarMaestro }) => {
                   </div>
                 )}
               </div>
-              <h3>{maestro.nombre}</h3>
+              <h3 style={{color: '#333333'}}>{maestro.nombre}</h3>
               {maestro.especialidad && (
-                <div className="badge bg-secondary mb-2">
+                <div className="badge bg-secondary mb-2" style={{backgroundColor: '#984F40', color: '#FFFFFF'}}>
                   <FaTools className="me-1" /> {maestro.especialidad}
                 </div>
               )}
@@ -69,16 +69,16 @@ const MaestrosDisponibles = ({ onSeleccionarMaestro }) => {
             
             <div className="p-3">
               {maestro.direccion && (
-                <p><FaMapMarkerAlt className="me-2" /> {maestro.direccion}</p>
+                <p style={{color: '#333333'}}><FaMapMarkerAlt className="me-2" style={{color: '#984F40'}} /> {maestro.direccion}</p>
               )}
               {maestro.telefono && (
-                <p><FaPhone className="me-2" /> {maestro.telefono}</p>
+                <p style={{color: '#333333'}}><FaPhone className="me-2" style={{color: '#984F40'}} /> {maestro.telefono}</p>
               )}
               
               <div className="mt-3 mb-3">
                 {maestro.rating ? (
                   <div>
-                    <strong>Calificación: {maestro.rating.toFixed(1)}</strong>
+                    <strong style={{color: '#333333'}}>Calificación: {maestro.rating.toFixed(1)}</strong>
                     <div>
                       {[...Array(5)].map((_, i) => (
                         <FaStar key={i} style={{ 
@@ -86,11 +86,11 @@ const MaestrosDisponibles = ({ onSeleccionarMaestro }) => {
                           marginRight: '2px'
                         }} />
                       ))}
-                      <span className="ms-1">({maestro.totalReviews || 0} reseñas)</span>
+                      <span className="ms-1" style={{color: '#333333'}}>({maestro.totalReviews || 0} reseñas)</span>
                     </div>
                   </div>
                 ) : (
-                  <div className="text-muted">
+                  <div style={{color: '#666666'}}>
                     <FaInfoCircle className="me-1" /> Sin calificaciones
                   </div>
                 )}
