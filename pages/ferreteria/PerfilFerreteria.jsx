@@ -19,7 +19,7 @@ const PerfilFerreteria = ({ perfil: perfilProp, setPerfil: setPerfilProp }) => {
     } else {
       const cargarPerfil = async () => {
         try {
-          const res = await axios.get('http://localhost:5000/api/users/perfil', {
+          const res = await axios.get('https://construlink-inky.vercel.app/api/users/perfil', {
             headers: { Authorization: localStorage.getItem('token') },
           });
           setPerfil(res.data);
@@ -56,7 +56,7 @@ const PerfilFerreteria = ({ perfil: perfilProp, setPerfil: setPerfilProp }) => {
     }
 
     try {
-      const res = await axios.put('http://localhost:5000/api/users/perfil', formData, {
+      const res = await axios.put('https://construlink-inky.vercel.app/api/users/perfil', formData, {
         headers: { 
           Authorization: localStorage.getItem('token'),
           'Content-Type': 'multipart/form-data'
@@ -82,7 +82,7 @@ const PerfilFerreteria = ({ perfil: perfilProp, setPerfil: setPerfilProp }) => {
         <div style={{ position: 'relative', display: 'inline-block' }}>
           {(preview || perfil.fotoPerfil) ? (
             <img 
-              src={preview || `https://construlink-mu.vercel.app/uploads/${perfil.fotoPerfil}`}
+              src={preview || `https://construlink-inky.vercel.app/uploads/${perfil.fotoPerfil}`}
               alt="Perfil" 
               style={{ 
                 width: '150px', 

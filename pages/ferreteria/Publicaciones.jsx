@@ -222,7 +222,7 @@ const Publicaciones = () => {
           <div key={p._id} className="card">
             {p.imagen && (
               <div className="card-image">
-                <img src={`https://construlink-mu.vercel.app/uploads/${p.imagen}`} alt={p.nombre} />
+                <img src={`https://construlink-inky.vercel.app/uploads/${p.imagen}`} alt={p.nombre} />
               </div>
             )}
             <div className="p-3">

@@ -60,7 +60,7 @@ const DashboardCliente = () => {
             <div className="avatar">
           {perfil?.fotoPerfil ? (
             <img 
-              src={`https://construlink-mu.vercel.app/uploads/${perfil.fotoPerfil}`}
+              src={`https://construlink-inky.vercel.app/uploads/${perfil.fotoPerfil}`}
               alt="Perfil" 
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
@@ -143,7 +143,7 @@ const DashboardCliente = () => {
             <div className="avatar">
               {perfil?.fotoPerfil ? (
                 <img 
-                  src={`https://construlink-mu.vercel.app/uploads/${perfil.fotoPerfil}`}
+                  src={`https://construlink-inky.vercel.app/uploads/${perfil.fotoPerfil}`}
                   alt="Perfil" 
                 />
               ) : (
@@ -234,7 +234,7 @@ const DashboardCliente = () => {
                         <div className="avatar" style={{ margin: '0 auto', width: '120px', height: '120px' }}>
                           {perfil?.fotoPerfil ? (
                             <img 
-                              src={`https://construlink-mu.vercel.app/uploads/${perfil.fotoPerfil}`}
+                              src={`https://construlink-inky.vercel.app/uploads/${perfil.fotoPerfil}`}
                               alt="Perfil" 
                             />
                           ) : (

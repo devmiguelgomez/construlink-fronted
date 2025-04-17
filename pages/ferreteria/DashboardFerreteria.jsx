@@ -42,7 +42,7 @@ const DashboardFerreteria = () => {
           <div className="avatar">
             {perfil?.fotoPerfil ? (
               <img 
-                src={`https://construlink-mu.vercel.app/uploads/${perfil.fotoPerfil}`}
+                src={`https://construlink-inky.vercel.app/uploads/${perfil.fotoPerfil}`}
                 alt="Perfil" 
               />
             ) : (
@@ -99,7 +99,7 @@ const DashboardFerreteria = () => {
             <div className="avatar">
               {perfil?.fotoPerfil ? (
                 <img 
-                  src={`https://construlink-mu.vercel.app/uploads/${perfil.fotoPerfil}`}
+                  src={`https://construlink-inky.vercel.app/uploads/${perfil.fotoPerfil}`}
                   alt="Perfil" 
                 />
               ) : (

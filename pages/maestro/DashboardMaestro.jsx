@@ -42,7 +42,7 @@ const DashboardMaestro = () => {
           <div className="avatar">
             {perfil?.fotoPerfil ? (
               <img 
-                src={`https://construlink-mu.vercel.app/uploads/${perfil.fotoPerfil}`}
+                src={`https://construlink-inky.vercel.app/uploads/${perfil.fotoPerfil}`}
                 alt="Perfil" 
               />
             ) : (
@@ -99,7 +99,7 @@ const DashboardMaestro = () => {
             <div className="avatar">
               {perfil?.fotoPerfil ? (
                 <img 
-                  src={`http://localhost:5000/uploads/${perfil.fotoPerfil}`}
+                  src={`https://construlink-inky.vercel.app/uploads/${perfil.fotoPerfil}`}
                   alt="Perfil" 
                 />
               ) : (
@@ -153,7 +153,7 @@ const DashboardMaestro = () => {
                         <div className="avatar" style={{ margin: '0 auto', width: '120px', height: '120px' }}>
                           {perfil?.fotoPerfil ? (
                             <img 
-                              src={`http://localhost:5000/uploads/${perfil.fotoPerfil}`}
+                              src={`https://construlink-inky.vercel.app/uploads/${perfil.fotoPerfil}`}
                               alt="Perfil" 
                             />
                           ) : (

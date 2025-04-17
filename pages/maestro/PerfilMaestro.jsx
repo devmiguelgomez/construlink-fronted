@@ -86,7 +86,7 @@ const PerfilMaestro = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
     }
 
     try {
-      const res = await axios.put('https://construlink-mu.vercel.app/api/users/perfil', formData, {
+      const res = await axios.put('https://construlink-inky.vercel.app/api/users/perfil', formData, {
         headers: { 
           Authorization: localStorage.getItem('token'),
           'Content-Type': 'multipart/form-data'
@@ -115,7 +115,7 @@ const PerfilMaestro = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
         <div style={{ position: 'relative', display: 'inline-block' }}>
           {(preview || perfilProp?.fotoPerfil) ? (
             <img 
-              src={preview || `https://construlink-mu.vercel.app/uploads/${perfilProp.fotoPerfil}`}
+              src={preview || `https://construlink-inky.vercel.app/uploads/${perfilProp.fotoPerfil}`}
               alt="Perfil" 
               style={{ 
                 width: '150px', 

@@ -7,7 +7,7 @@ const MisProductos = () => {
   const [nuevo, setNuevo] = useState({ nombre: '', descripcion: '', cantidadDisponible: '', contacto: '', precio: '' });
 
   const cargar = async () => {
-    const res = await axios.get('https://construlink-mu.vercel.app/productos/mis-productos', {
+    const res = await axios.get('https://construlink-inky.vercel.app/productos/mis-productos', {
       headers: { Authorization: localStorage.getItem('token') }
     });
     setProductos(res.data);
@@ -16,14 +16,14 @@ const MisProductos = () => {
   useEffect(() => { cargar(); }, []);
 
   const crear = async () => {
-    await axios.post('https://construlink-mu.vercel.app/api/productos', nuevo, {
+    await axios.post('https://construlink-inky.vercel.app/api/productos', nuevo, {
       headers: { Authorization: localStorage.getItem('token') }
     });
     cargar();
   };
 
   const eliminar = async (id) => {
-    await axios.delete(`https://construlink-mu.vercel.app/api/productos/${id}`, {
+    await axios.delete(`https://construlink-inky.vercel.app/api/productos/${id}`, {
       headers: { Authorization: localStorage.getItem('token') }
     });
     cargar();

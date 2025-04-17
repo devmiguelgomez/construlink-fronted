@@ -263,7 +263,7 @@ const ProductosDisponibles = ({ ferreteriaId }) => {
           <div className="card" key={p._id}>
             {p.imagen && (
               <div className="card-image">
-                <img src={`https://construlink-mu.vercel.app/uploads/${p.imagen}`} alt={p.nombre} />
+                <img src={`https://construlink-inky.vercel.app/uploads/${p.imagen}`} alt={p.nombre} />
               </div>
             )}
             <h3>{p.nombre}</h3>

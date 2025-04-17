@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
       
       if (token) {
         try {
-          const res = await axios.get('https://construlink-mu.vercel.app/api/users/perfil', {
+          const res = await axios.get('https://construlink-inky.vercel.app/api/users/perfil', {
             headers: { Authorization: token }
           });
           console.log("Perfil obtenido:", res.data);
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const res = await axios.post('https://construlink-mu.vercel.app/api/users/login', credentials);
+      const res = await axios.post('https://construlink-inky.vercel.app/api/users/login', credentials);
       console.log('Respuesta de login en AuthContext:', res.data);
       
       if (!res.data.token || !res.data.user) {
