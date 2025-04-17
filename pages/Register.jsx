@@ -4,7 +4,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { FaUser, FaLock, FaEnvelope, FaTools, FaWrench } from 'react-icons/fa';
 import construlinkLogo from '../src/assets/construlink.jpg';
-import '../src/styles/forms.css';
 
 // Lista de especialidades comunes para maestros
 const especialidades = [
@@ -138,100 +137,84 @@ const Register = () => {
 
   return (
     <div className="auth-container">
-      <div className="auth-card form-container">
+      <div className="auth-card">
         <div className="auth-header">
           {/* Reemplaza el icono con la imagen importada */}
           <img 
-            src={construlinkLogo}
+            src={construlinkLogo} // Asegúrate que la ruta sea correcta desde la carpeta public o ajusta la importación si está en src
             alt="Construlink Logo" 
-            style={{ width: '100px', height: 'auto', marginBottom: '15px' }}
+            style={{ width: '100px', height: 'auto', marginBottom: '15px' }} // Ajusta el tamaño según necesites
           />
           <h2>{getTitleByRole()}</h2>
         </div>
 
-        {error && <div className="alert alert-danger form-error">{error}</div>}
+        {error && <div className="alert alert-danger">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="nombre" className="form-label">
+            <label htmlFor="nombre">
               <FaUser /> Nombre {formData.role === 'ferreteria' ? 'de la Ferretería' : 'Completo'}
             </label>
-            <div className="input-with-icon">
-              <FaUser className="input-icon" />
-              <input
-                type="text"
-                id="nombre"
-                name="nombre"
-                className="form-control"
-                value={formData.nombre}
-                onChange={handleChange}
-                required
-                autoComplete="name"
-                placeholder={formData.role === 'ferreteria' ? 'Nombre de la ferretería' : 'Su nombre completo'}
-              />
-            </div>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              className="form-control"
+              value={formData.nombre}
+              onChange={handleChange}
+              required
+              autoComplete="name"
+            />
           </div>
 
           <div className="form-group">
-            <label htmlFor="email" className="form-label">
+            <label htmlFor="email">
               <FaEnvelope /> Correo Electrónico
             </label>
-            <div className="input-with-icon">
-              <FaEnvelope className="input-icon" />
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="form-control"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                autoComplete="email"
-                placeholder="ejemplo@correo.com"
-              />
-            </div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="form-control"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              autoComplete="email"
+            />
           </div>
 
           <div className="form-group">
-            <label htmlFor="password" className="form-label">
+            <label htmlFor="password">
               <FaLock /> Contraseña
             </label>
-            <div className="input-with-icon">
-              <FaLock className="input-icon" />
-              <input
-                type="password"
-                id="password"
-                name="password"
-                className="form-control"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                minLength="6"
-                autoComplete="new-password"
-                placeholder="Mínimo 6 caracteres"
-              />
-            </div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              className="form-control"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              minLength="6"
+              autoComplete="new-password"
+            />
           </div>
 
           <div className="form-group">
-            <label htmlFor="passwordConfirm" className="form-label">
+            <label htmlFor="passwordConfirm">
               <FaLock /> Confirmar Contraseña
             </label>
-            <div className="input-with-icon">
-              <FaLock className="input-icon" />
-              <input
-                type="password"
-                id="passwordConfirm"
-                name="passwordConfirm"
-                className="form-control"
-                value={formData.passwordConfirm}
-                onChange={handleChange}
-                required
-                minLength="6"
-                autoComplete="new-password"
-                placeholder="Repita su contraseña"
-              />
-            </div>
+            <input
+              type="password"
+              id="passwordConfirm"
+              name="passwordConfirm"
+              className="form-control"
+              value={formData.passwordConfirm}
+              onChange={handleChange}
+              required
+              minLength="6"
+              autoComplete="new-password"
+            />
           </div>
 
           {/* Campo oculto para el rol */}
@@ -240,7 +223,7 @@ const Register = () => {
           {/* Mostrar el selector de especialidades solo para maestros */}
           {formData.role === 'maestro' && (
             <div className="form-group">
-              <label className="form-label">
+              <label>
                 <FaWrench /> Especialidades
               </label>
               <p className="text-muted" style={{ fontSize: '0.9rem', marginBottom: '10px' }}>
@@ -253,22 +236,39 @@ const Register = () => {
                 maxHeight: '150px',
                 overflowY: 'auto',
                 padding: '10px',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                backgroundColor: '#f9f9f9'
+                border: '1px solid #F4F1F1',
+                borderRadius: '4px'
               }}>
                 {especialidades.map(especialidad => (
-                  <div key={especialidad} className="checkbox-container">
-                    <input 
-                      type="checkbox" 
-                      id={`esp-${especialidad}`}
-                      checked={formData.especialidades.includes(especialidad)}
-                      onChange={() => handleEspecialidadChange(especialidad)}
-                    />
-                    <label htmlFor={`esp-${especialidad}`}>{especialidad}</label>
+                  <div 
+                    key={especialidad} 
+                    style={{ 
+                      display: 'inline-block'
+                    }}
+                  >
+                    <label style={{ 
+                      display: 'flex', 
+                      alignItems: 'center',
+                      cursor: 'pointer',
+                      marginRight: '10px'
+                    }}>
+                      <input 
+                        type="checkbox" 
+                        checked={formData.especialidades.includes(especialidad)}
+                        onChange={() => handleEspecialidadChange(especialidad)}
+                        style={{ marginRight: '5px' }}
+                      />
+                      {especialidad}
+                    </label>
                   </div>
                 ))}
               </div>
+              {/* Mensaje de error si no se selecciona especialidad (opcional, ya se valida en submit) */}
+              {/* {formData.especialidades.length === 0 && (
+                <p style={{ color: '#e74c3c', fontSize: '0.9rem', marginTop: '5px' }}>
+                  Debes seleccionar al menos una especialidad
+                </p>
+              )} */}
             </div>
           )}
 
@@ -279,13 +279,14 @@ const Register = () => {
 
           <button 
             type="submit" 
-            className="form-button" 
+            className="btn" 
+            style={{ width: '100%', marginBottom: '20px', padding: '14px' }}
             disabled={loading || (formData.role === 'maestro' && formData.especialidades.length === 0)}
           >
             {loading ? 'Registrando...' : 'Registrarse'}
           </button>
 
-          <p className="text-center mt-3">
+          <p className="text-center">
             ¿Ya tienes cuenta? <Link to="/" style={{ color: '#984F40', fontWeight: 'bold' }}>Inicia Sesión</Link>
           </p>
         </form>

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { FaCamera } from 'react-icons/fa';
-import '../../src/styles/forms.css';
 
 const PerfilCliente = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditando }) => {
   const [perfil, setPerfil] = useState({
@@ -120,8 +119,8 @@ const PerfilCliente = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
       </div>
 
       <div>
-        <div className="form-group">
-          <label htmlFor="nombre" className="form-label">Nombre</label>
+        <div className="form-group mb-3">
+          <label htmlFor="nombre">Nombre</label>
           <input 
             type="text"
             id="nombre"
@@ -129,12 +128,11 @@ const PerfilCliente = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
             className="form-control"
             value={perfil.nombre || ''} 
             onChange={handleChange} 
-            placeholder="Su nombre completo"
           />
         </div>
         
-        <div className="form-group">
-          <label htmlFor="telefono" className="form-label">Teléfono</label>
+        <div className="form-group mb-3">
+          <label htmlFor="telefono">Teléfono</label>
           <input 
             type="text"
             id="telefono"
@@ -142,12 +140,11 @@ const PerfilCliente = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
             className="form-control"
             value={perfil.telefono || ''} 
             onChange={handleChange} 
-            placeholder="Número de contacto"
           />
         </div>
         
-        <div className="form-group">
-          <label htmlFor="direccion" className="form-label">Dirección</label>
+        <div className="form-group mb-3">
+          <label htmlFor="direccion">Dirección</label>
           <input 
             type="text"
             id="direccion"
@@ -155,7 +152,6 @@ const PerfilCliente = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
             className="form-control"
             value={perfil.direccion || ''} 
             onChange={handleChange} 
-            placeholder="Su dirección"
           />
         </div>
         
@@ -170,7 +166,7 @@ const PerfilCliente = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
           </button>
           <button 
             onClick={guardarPerfil}
-            className="form-button"
+            className="btn"
             style={{ flex: 1 }}
             disabled={loading}
           >

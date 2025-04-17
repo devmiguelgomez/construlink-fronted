@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { FaCamera, FaWrench } from 'react-icons/fa';
-import '../../src/styles/forms.css';
 
 // Lista de especialidades comunes para maestros
 const especialidades = [
@@ -171,8 +170,8 @@ const PerfilMaestro = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
       </div>
 
       <div>
-        <div className="form-group">
-          <label htmlFor="nombre" className="form-label">Nombre completo</label>
+        <div className="form-group mb-3">
+          <label htmlFor="nombre">Nombre</label>
           <input 
             type="text"
             id="nombre"
@@ -180,12 +179,11 @@ const PerfilMaestro = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
             className="form-control"
             value={perfil.nombre || ''} 
             onChange={handleChange} 
-            placeholder="Su nombre completo"
           />
         </div>
         
-        <div className="form-group">
-          <label htmlFor="telefono" className="form-label">Teléfono de contacto</label>
+        <div className="form-group mb-3">
+          <label htmlFor="telefono">Teléfono</label>
           <input 
             type="text"
             id="telefono"
@@ -193,12 +191,11 @@ const PerfilMaestro = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
             className="form-control"
             value={perfil.telefono || ''} 
             onChange={handleChange} 
-            placeholder="Número de contacto"
           />
         </div>
         
-        <div className="form-group">
-          <label htmlFor="direccion" className="form-label">Dirección</label>
+        <div className="form-group mb-3">
+          <label htmlFor="direccion">Dirección</label>
           <input 
             type="text"
             id="direccion"
@@ -206,12 +203,11 @@ const PerfilMaestro = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
             className="form-control"
             value={perfil.direccion || ''} 
             onChange={handleChange} 
-            placeholder="Su dirección de trabajo"
           />
         </div>
         
-        <div className="form-group">
-          <label className="form-label">
+        <div className="form-group mb-3">
+          <label>
             <FaWrench style={{ marginRight: '5px' }} />
             Especialidades
           </label>
@@ -222,25 +218,38 @@ const PerfilMaestro = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
             maxHeight: '150px',
             overflowY: 'auto',
             padding: '10px',
-            border: '1px solid #ddd',
-            borderRadius: '6px',
-            backgroundColor: '#f9f9f9',
+            border: '1px solid #F4F1F1',
+            borderRadius: '4px',
             marginTop: '5px'
           }}>
             {especialidades.map(especialidad => (
-              <div key={especialidad} className="checkbox-container">
-                <input 
-                  type="checkbox" 
-                  id={`esp-${especialidad}`}
-                  checked={perfil.especialidades.includes(especialidad)}
-                  onChange={() => handleEspecialidadChange(especialidad)}
-                />
-                <label htmlFor={`esp-${especialidad}`}>{especialidad}</label>
+              <div 
+                key={especialidad} 
+                style={{ 
+                  display: 'inline-block'
+                }}
+              >
+                <label style={{ 
+                  display: 'flex', 
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  marginRight: '10px'
+                }}>
+                  <input 
+                    type="checkbox" 
+                    checked={perfil.especialidades.includes(especialidad)}
+                    onChange={() => handleEspecialidadChange(especialidad)}
+                    style={{ marginRight: '5px' }}
+                  />
+                  {especialidad}
+                </label>
               </div>
             ))}
           </div>
           {perfil.especialidades.length === 0 && (
-            <p className="form-error">Debes seleccionar al menos una especialidad</p>
+            <p style={{ color: '#e74c3c', fontSize: '0.9rem', marginTop: '5px' }}>
+              Debes seleccionar al menos una especialidad
+            </p>
           )}
         </div>
         
@@ -255,7 +264,7 @@ const PerfilMaestro = ({ perfil: perfilProp, setPerfil: setPerfilProp, setEditan
           </button>
           <button 
             onClick={guardarPerfil}
-            className="form-button"
+            className="btn"
             style={{ flex: 1 }}
             disabled={loading || perfil.especialidades.length === 0}
           >

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaCamera } from 'react-icons/fa';
-import '../../src/styles/forms.css';
 
 const PerfilFerreteria = ({ perfil: perfilProp, setPerfil: setPerfilProp }) => {
   const [perfil, setPerfil] = useState({
@@ -138,45 +137,60 @@ const PerfilFerreteria = ({ perfil: perfilProp, setPerfil: setPerfilProp }) => {
       </div>
 
       <div>
-        <div className="form-group">
-          <label htmlFor="nombre" className="form-label">Nombre de la ferretería</label>
-          <input 
-            id="nombre"
-            name="nombre" 
-            value={perfil.nombre || ''} 
-            placeholder="Nombre" 
-            onChange={handleChange} 
-            className="form-control"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="telefono" className="form-label">Teléfono de contacto</label>
-          <input 
-            id="telefono"
-            name="telefono" 
-            value={perfil.telefono || ''} 
-            placeholder="Teléfono" 
-            onChange={handleChange} 
-            className="form-control"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="direccion" className="form-label">Dirección</label>
-          <input 
-            id="direccion"
-            name="direccion" 
-            value={perfil.direccion || ''} 
-            placeholder="Dirección" 
-            onChange={handleChange} 
-            className="form-control"
-          />
-        </div>
+        <input 
+          name="nombre" 
+          value={perfil.nombre || ''} 
+          placeholder="Nombre" 
+          onChange={handleChange} 
+          style={{
+            padding: '12px',
+            borderRadius: '8px',
+            border: '1px solid #ddd',
+            marginBottom: '15px',
+            width: '100%'
+          }}
+        />
+        <input 
+          name="telefono" 
+          value={perfil.telefono || ''} 
+          placeholder="Teléfono" 
+          onChange={handleChange} 
+          style={{
+            padding: '12px',
+            borderRadius: '8px',
+            border: '1px solid #ddd',
+            marginBottom: '15px',
+            width: '100%'
+          }}
+        />
+        <input 
+          name="direccion" 
+          value={perfil.direccion || ''} 
+          placeholder="Dirección" 
+          onChange={handleChange} 
+          style={{
+            padding: '12px',
+            borderRadius: '8px',
+            border: '1px solid #ddd',
+            marginBottom: '15px',
+            width: '100%'
+          }}
+        />
         
         <button 
           onClick={guardarPerfil}
-          className="form-button"
+          style={{
+            backgroundColor: '#984F40',
+            color: 'white',
+            border: 'none',
+            padding: '12px',
+            borderRadius: '8px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            width: '100%',
+            fontSize: '16px',
+            marginTop: '10px'
+          }}
         >
           Guardar Cambios
         </button>
